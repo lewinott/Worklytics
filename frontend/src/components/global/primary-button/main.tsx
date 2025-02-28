@@ -1,10 +1,13 @@
 import React from "react";
 import * as S from './styles'
 
-const PrimaryButton = () =>{
+interface ButtonProps{
+    description: string,
+}
+const PrimaryButton: React.FC<ButtonProps> = ({description}) =>{
     return(
         <S.ButtonBackground>
-            Salvar
+            {description}
         </S.ButtonBackground>
     )
 }

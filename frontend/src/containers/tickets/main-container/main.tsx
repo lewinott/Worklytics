@@ -1,9 +1,12 @@
 import React from "react";
 import * as S from './styles'
-import Header from "../../../components/header/main";
+import Header from "../../../components/global/header/main";
 import FormsContainer from "../forms-container/main";
 import OptionsTable from "../options-table/main";
-import Table from "../../../components/table/main";
+import Table from "../../../components/tickets/table/main";
+import ContainerTable from "../table-container/main";
+import { FixedContainer } from "../bottom-container/styles";
+import PrimaryButton from "../../../components/global/primary-button/main";
 
 const MainContainer = () => {
     return (
@@ -18,7 +21,10 @@ const MainContainer = () => {
                 <Header mainTitle="Seus tickets" 
                 subTitle="Pesquise pelo número ou filtre pelo status do ticket"/>
                 <OptionsTable />
-                <Table/>
+                <ContainerTable/>
+                <FixedContainer>
+                    <PrimaryButton description="Finalizar ticket"/>
+                </FixedContainer>
                 
             </S.LeftContainer>
         </S.MainContainer>

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "../../styles/theme";
+import { colors } from "../../../styles/theme";
 
 export const ButtonBackground = styled.button`
     height: 48px;

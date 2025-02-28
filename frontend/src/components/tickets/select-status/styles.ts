@@ -1,4 +1,4 @@
-import { colors } from "../../styles/theme";
+import { colors } from "../../../styles/theme";
 import styled from "styled-components";
 
 
@@ -12,7 +12,7 @@ export const Icon = styled.div`
 
 export const DropdownContainer = styled.div`
     position: relative;
-    width: 140px;
+    width: 240px;
 `;
 
 export const DropdownHeader = styled.div`
@@ -20,11 +20,15 @@ export const DropdownHeader = styled.div`
     width: 100%;
     height: 48px;
     padding: 12px 16px;
-    background-color: transparent;
+    background-color: ${colors.boschgray90};
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    &:hover{
+        background-color: ${colors.boschgray80};
+    }
 
 `;
 

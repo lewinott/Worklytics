@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { colors } from "../../styles/theme"
+import { colors } from "../../../styles/theme"
 
 export const Supergraphic = styled.div`
     background-image: url('/public/svg/Bosch-Supergraphic_RGB.svg');
