@@ -1,13 +1,31 @@
-import { useState } from 'react'
-import { GlobalStyles } from './styles/global-styles'
-import Tickets from './pages/tickets/main'
+// Style
+import { GlobalStyles } from './styles/global-styles';
 
-function App() {
+// Libs
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+
+// Pages
+import Tickets from './pages/tickets/main';
+import Login from './pages/auth/main';
+import Callback from './pages/auth/callback';
+import { AuthProvider } from './contexts/authContext';
+import ProtectedRoutes from './utils/ProtectedRoutes';
+
+const App = () => {
   return (
-    <>
-    < GlobalStyles />
-    < Tickets/>
-    </>
+    <Router>
+      <GlobalStyles/>
+      <AuthProvider>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/callback" element={<Callback />} />
+
+          <Route element={<ProtectedRoutes/>}>
+            <Route path="/" element={<Tickets/>}/>
+          </Route>
+        </Routes>
+      </AuthProvider>
+    </Router>
   )
 }
 
