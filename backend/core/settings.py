@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+from datetime import timedelta
 
 load_dotenv()
 
@@ -36,6 +37,8 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
 ]
 
+CORS_ALLOW_CREDENTIALS = True
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -50,6 +53,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'django_filters',
+    'rest_framework_simplejwt',
 
     # Project
     'tickets',
@@ -140,7 +144,30 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-TOKEN_URL=os.getenv("TOKEN_URL")
-CLIENT_ID=os.getenv("CLIENT_ID")
-CLIENT_SECRET=os.getenv("CLIENT_SECRET")
-REDIRECT_URI=os.getenv("REDIRECT_URI")
+# Enviroment Variables
+TOKEN_URL=os.getenv('TOKEN_URL')
+CLIENT_ID=os.getenv('CLIENT_ID')
+CLIENT_SECRET=os.getenv('CLIENT_SECRET')
+REDIRECT_URI=os.getenv('REDIRECT_URI')
+PUBLIC_KEY=f"""-----BEGIN PUBLIC KEY-----
+{os.getenv('PUBLIC_KEY')}
+-----END PUBLIC KEY-----"""
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
+
+SIMPLE_JWT = {
+    'TOKEN_TYPE_CLAIM': None,
+    'ALGORITHM': 'RS256',
+    'AUDIENCE': "account",
+    'SIGNING_KEY': None,
+    'VERIFYING_KEY':PUBLIC_KEY,
+    'AUTH_HEADER_TYPES': ('JWT', 'Bearer', ),
+    'USER_ID_CLAIM': 'sub',
+    'USER_ID_FIELD': 'username',
+    'ISSUER': 'http://localhost:8080/realms/dev',
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
+}

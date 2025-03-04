@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 
 class Ticket(models.Model):
     STATUS_CHOICES = [
@@ -16,6 +17,7 @@ class Ticket(models.Model):
     creation_time = models.TimeField()
     # assessment = models.CharField(max_length=45)
     finished = models.BooleanField()
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'ticket'
