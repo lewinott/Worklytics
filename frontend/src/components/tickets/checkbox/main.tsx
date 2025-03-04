@@ -3,7 +3,7 @@ import * as S from "./styles";
 
 interface CheckboxProps {
   checked: boolean;
-  onChange: () => void;
+  onChange?: () => void;
 }
 
 const Checkbox: React.FC<CheckboxProps> = ({ checked, onChange }) => {
