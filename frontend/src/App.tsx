@@ -6,6 +6,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
 // Pages
 import Tickets from './pages/tickets/main';
+import Produtivity from './pages/produtivity/main';
 import Login from './pages/auth/main';
 import Callback from './pages/auth/callback';
 import { AuthProvider } from './contexts/authContext';
@@ -25,6 +26,16 @@ const App = () => {
           </Route>
         </Routes>
       </AuthProvider>
+    </Router>
+
+    <Router>
+      <GlobalStyles/>
+        <Routes>
+          <Route element={<ProtectedRoutes/>}>
+            <Route path="/" element={<Tickets/>}/>
+            <Route path="/produtivity" element={<Produtivity/>}/>
+          </Route>
+        </Routes>
     </Router>
   )
 }
