@@ -3,10 +3,11 @@ import * as S from './styles'
 
 interface ButtonProps{
     description: string,
+    onClick: () => void,
 }
-const PrimaryButton: React.FC<ButtonProps> = ({description}) =>{
+const PrimaryButton: React.FC<ButtonProps> = ({description, onClick}) =>{
     return(
-        <S.ButtonBackground>
+        <S.ButtonBackground onClick={onClick} >
             {description}
         </S.ButtonBackground>
     )

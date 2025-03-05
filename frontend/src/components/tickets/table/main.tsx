@@ -1,56 +1,40 @@
-import React from "react";
-import * as S from './styles'
-import Checkbox from "../checkbox/main";
-import TableStatus from "../table-status/main";
+import * as S from './styles';
+import { useEffect } from "react";
+import { ticketType } from '../../../utils/types';
+import TableItem from '../table-item/main';
+import { useTicket } from '../../../contexts/ticketsContext';
 
-const Table = () =>{
+interface TableProps {
+    tickets: ticketType[],
+}
+
+const Table: React.FC<TableProps> = ({tickets}) => {
+    const { handleGetTickets } = useTicket();
+    
+    useEffect(() => {
+        handleGetTickets();
+    }, [])
+
     return(
         <S.Table>
-            <table>
-                <tr>
-                    <td><Checkbox/></td>
-                    <td>0000000000000000</td>
-                    <td><TableStatus/></td>
-                    <td>00/00/00 23:00</td>
-                </tr>
-                <tr>
-                    <td><Checkbox/></td>
-                    <td>0000000000000000</td>
-                    <td><TableStatus/></td>
-                    <td>00/00/00 23:00</td>
-                </tr>
-                <tr>
-                    <td><Checkbox/></td>
-                    <td>0000000000000000</td>
-                    <td><TableStatus/></td>
-                    <td>00/00/00 23:00</td>
-                </tr>
-                <tr>
-                    <td><Checkbox/></td>
-                    <td>0000000000000000</td>
-                    <td><TableStatus/></td>
-                    <td>00/00/00 23:00</td>
-                </tr>
-                <tr>
-                    <td><Checkbox/></td>
-                    <td>0000000000000000</td>
-                    <td><TableStatus/></td>
-                    <td>00/00/00 23:00</td>
-                </tr>
-                <tr>
-                    <td><Checkbox/></td>
-                    <td>0000000000000000</td>
-                    <td><TableStatus/></td>
-                    <td>00/00/00 23:00</td>
-                </tr>
-                <tr>
-                    <td><Checkbox/></td>
-                    <td>0000000000000000</td>
-                    <td><TableStatus/></td>
-                    <td>00/00/00 23:00</td>
-                </tr>
+            {   
                 
-            </table>            
+                tickets.length ? 
+                    <table>
+                        <tbody>
+                            {
+                                tickets.map((ticket) => (       
+                                    <TableItem
+                                        key={ticket.id} 
+                                        ticket={ticket}
+                                    />
+                                ))
+                            }
+                        </tbody>
+                    </table>
+                :
+                "Não há tickets cadastrados"
+            }
         </S.Table>
     )
 }

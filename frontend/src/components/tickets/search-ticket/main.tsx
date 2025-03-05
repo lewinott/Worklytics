@@ -1,10 +1,19 @@
 import React from "react";
 import * as S from './styles'
 
-const SearchTicket = () => {
+interface SearchTicketProps {
+    onChange: (text: string) => void,
+    value: string,
+}
+
+const SearchTicket: React.FC<SearchTicketProps> = ({ value, onChange }) => {
     return (
         <S.Background>
-            <S.InputText placeholder="Pesquisa por Ticket"/>
+            <S.InputText 
+                value={value} 
+                onChange={(e) => onChange(e.target.value)} 
+                placeholder="Pesquisa por Ticket"
+            />
             <S.Icon/>
         </S.Background>
     )

@@ -1,23 +1,36 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import * as S from "./styles";
+import { useEffect } from "react";
 
+interface TableStatusProps{
+  statusValue: string,
+  setStatusValue: (status: string) => void,
+}
 
-const TableStatus = () => {
+const TableStatus: React.FC<TableStatusProps> = ({ statusValue, setStatusValue }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState({
     value: "default",
-    label: "Status",
+    label: "status",
     color: "#ccc", 
   });
 
   const options = [
     { value: "opcao1", label: "Em espera", color: "#FFCF00" },
-    { value: "opcao2", label: "Concluído", color: "#37A264" }, 
+    { value: "opcao2", label: "Resolvido", color: "#37A264" }, 
     { value: "opcao3", label: "Pendente", color: "#FF6E6F" },
   ];
 
+  
+
+  useEffect(() => {
+    if(statusValue === "Em espera") setSelectedOption(options[0]);
+    if(statusValue === "Resolvido") setSelectedOption(options[1]);
+    if(statusValue === "Pendente") setSelectedOption(options[2]);
+  }, [statusValue]);
+
   const handleSelect = (option: { value: string; label: string; color: string }) => {
-    setSelectedOption(option);
+    setStatusValue(option.label);
     setIsOpen(false);
   };
 

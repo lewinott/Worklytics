@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import * as S from "./styles";
 import Checkbox from "../checkbox/main";
 
-const TableStatus = () => {
+interface TableStatusProps {
+    onChange: (status: string) => void
+}
+
+const TableStatus: React.FC<TableStatusProps> = ({ onChange }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
@@ -12,7 +16,9 @@ const TableStatus = () => {
     ];
 
     const toggleOption = (option: { value: string; label: string }) => {
-        setSelectedOptions((prev) =>
+        onChange(option.label.toLowerCase());
+
+        setSelectedOptions((prev) => 
             prev.includes(option.label)
                 ? prev.filter((item) => item !== option.label)
                 : [...prev, option.label]

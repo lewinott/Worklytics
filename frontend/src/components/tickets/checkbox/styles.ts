@@ -9,10 +9,10 @@ export const HiddenCheckbox = styled.input`
   display: none; 
 `;
 
-export const CustomCheckbox = styled.div<{ isChecked: boolean }>`
+export const CustomCheckbox = styled.div<{ "data-ischecked": boolean }>`
   width: 24px;
   height: 24px;
-  background-color: ${({ isChecked }) => (isChecked ? colors.boschblue50 : colors.boschgray50)};
+  background-color: ${(props) => (props["data-ischecked"] ? colors.boschblue50 : colors.boschgray50)};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21,7 +21,7 @@ export const CustomCheckbox = styled.div<{ isChecked: boolean }>`
   &::after {
     height: 100%;
     background-color: ${colors.boschblue50};
-    opacity: ${({ isChecked }) => (isChecked ? 1 : 0)};
+    opacity: ${(props) => (props["data-ischecked"] ? 1 : 0)};
     transition: opacity 0.3s;
   }
 `;
