@@ -12,10 +12,16 @@ export const loginRequest = async (code: string) => {
     return response;
 };
 
-export const RefreshTokenRequest = async () => {
+export const refreshTokenRequest = async () => {
     const response = await axios.post(`${serverBaseUrl}/auth/refresh_token/`,{}, {
         withCredentials: true,
     });
 
     return response;
 };
+
+export const logoutRequest = async () => {
+    await axios.post(`${serverBaseUrl}/auth/logout/`,{}, {
+        withCredentials: true,
+    });
+  };

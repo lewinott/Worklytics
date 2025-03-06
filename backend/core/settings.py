@@ -145,6 +145,8 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Enviroment Variables
+KEYCLOAK_REALM=os.getenv('KEYCLOAK_REALM')
+KEYCLOAK_URL=os.getenv('KEYCLOAK_URL')
 TOKEN_URL=os.getenv('TOKEN_URL')
 CLIENT_ID=os.getenv('CLIENT_ID')
 CLIENT_SECRET=os.getenv('CLIENT_SECRET')

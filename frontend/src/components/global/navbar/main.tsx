@@ -1,4 +1,3 @@
-import React from "react";
 import * as S from "./styles"
 
 const Navbar = () =>{
@@ -7,10 +6,6 @@ const Navbar = () =>{
         <S.Supergraphic/>
         <S.Bar>
             <S.Logo/>
-            <S.LabelLogin>
-                <S.IconLogin/>
-                Login
-            </S.LabelLogin>
         </S.Bar>
         <S.Nav>
             <S.Options>

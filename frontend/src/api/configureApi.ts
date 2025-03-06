@@ -1,5 +1,5 @@
 import axios from "axios";
-import { RefreshTokenRequest } from "./authRequests";
+import { refreshTokenRequest, logoutRequest } from "./authRequests";
 import { serverBaseUrl } from "./common";
 import Cookies from "js-cookie";
 
@@ -16,7 +16,7 @@ api.interceptors.response.use(
 
             originalRequest._retry = true;
             try {
-                const refreshResponse = await RefreshTokenRequest();
+                const refreshResponse = await refreshTokenRequest();
                 Cookies.set("accessToken", refreshResponse.data.access_token)
                 
                 return api(originalRequest);
@@ -26,6 +26,8 @@ api.interceptors.response.use(
                 if(response?.status == 401 && response?.data?.message === "Código de atualização inválido"){
                     Cookies.remove("accessToken");
                 }
+
+                logoutRequest();
                 
                 console.error("Falha ao renovar o token:", refreshError);
             }
