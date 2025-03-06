@@ -169,5 +169,4 @@ SIMPLE_JWT = {
     'USER_ID_CLAIM': 'sub',
     'USER_ID_FIELD': 'username',
     'ISSUER': 'http://localhost:8080/realms/dev',
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
 }
