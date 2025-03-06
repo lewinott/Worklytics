@@ -4,7 +4,6 @@ import { colors } from "../../../styles/theme";
 export const BackgroundContainer = styled.div`
     height: 400px;
     width: 60%;
-    margin: 20px;
     background-color: white;
     display: flex;
     flex-direction: column;
@@ -15,7 +14,8 @@ export const BackgroundContainer = styled.div`
     p{
         font-size: 24px;
         color: ${colors.boschblue50};
-        margin-top: 30px;
+        margin: 30px 0px 10px;
+
     }
 
 `
@@ -51,7 +51,7 @@ export const LegendItem = styled.div`
     gap: 5px;
 
     span{
-        font-size: 12px;
+        font-size: 15px;
     }
 `;
 

@@ -14,30 +14,30 @@ import ProtectedRoutes from './utils/ProtectedRoutes';
 
 const App = () => {
   return (
-    <Router>
-      <GlobalStyles/>
-      <AuthProvider>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/callback" element={<Callback />} />
-          
-          <Route element={<ProtectedRoutes/>}>
-            <Route path="/" element={<Tickets/>}/>
-            <Route path="/produtivity" element={<Produtivity/>}/>
-          </Route>
-        </Routes>
-      </AuthProvider>
-    </Router>
-
     // <Router>
     //   <GlobalStyles/>
+    //   <AuthProvider>
     //     <Routes>
+    //       <Route path="/login" element={<Login />} />
+    //       <Route path="/callback" element={<Callback />} />
+          
     //       <Route element={<ProtectedRoutes/>}>
     //         <Route path="/" element={<Tickets/>}/>
     //         <Route path="/produtivity" element={<Produtivity/>}/>
     //       </Route>
     //     </Routes>
+    //   </AuthProvider>
     // </Router>
+
+    <Router>
+      <GlobalStyles/>
+        <Routes>
+          {/* <Route element={<ProtectedRoutes/>}> */}
+            <Route path="/" element={<Tickets/>}/>
+            <Route path="/produtivity" element={<Produtivity/>}/>
+          {/* </Route> */}
+        </Routes>
+    </Router>
   )
 }
 

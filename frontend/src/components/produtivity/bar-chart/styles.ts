@@ -3,8 +3,7 @@ import { colors } from "../../../styles/theme";
 
 export const BackgroundContainer = styled.div`
     height: 400px;
-    width: 100%;
-    margin: 20px;
+    width: 60%;
     background-color: white;
     display: flex;
     flex-direction: column;
@@ -15,7 +14,7 @@ export const BackgroundContainer = styled.div`
     p{
         font-size: 24px;
         color: ${colors.boschblue50};
-        margin-top: 30px;
+        margin: 10px 0px 10px;
     }
 `
 
