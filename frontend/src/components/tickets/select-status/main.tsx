@@ -11,7 +11,7 @@ const SelectStatus: React.FC<SelectStatusProps> = ({ handleChange }) => {
   
     const options = [
       { value: "opcao1", label: "Em espera" },
-      { value: "opcao2", label: "Concluído" },
+      { value: "opcao2", label: "Resolvido" },
       { value: "opcao3", label: "Pendente" },
     ];
   

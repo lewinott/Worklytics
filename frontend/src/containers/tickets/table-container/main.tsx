@@ -10,17 +10,17 @@ import { useTicket } from '../../../contexts/ticketsContext';
 const ContainerTable = () => {
     const { 
         handleFinishTicket, 
-        filteredTickets, 
         setFilterStatus, 
         setTextSearch, 
         textSearch,
         idTickets, 
+        setCheckAllTickets,
     } = useTicket();
     
     return(
         <>  
             <S.MainContainer>
-                <SecondaryButton onClick={() => {}}/>
+                <SecondaryButton onClick={() => setCheckAllTickets(prev => !prev)}/>
                 <FilterStatus onChange={(status) => setFilterStatus(
                     (prev) => prev.includes(status)
                         ? prev.filter((item) => item !== status)
@@ -29,9 +29,7 @@ const ContainerTable = () => {
                 <SearchTicket value={textSearch} onChange={setTextSearch}/>
             </S.MainContainer>
             <S.Container>
-                <Table
-                    tickets={filteredTickets}
-                />      
+                <Table/>      
             </S.Container>
             <FixedContainer>
                 <PrimaryButton onClick={() => {

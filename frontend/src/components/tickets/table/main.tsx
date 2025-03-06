@@ -1,15 +1,10 @@
 import * as S from './styles';
 import { useEffect } from "react";
-import { ticketType } from '../../../utils/types';
 import TableItem from '../table-item/main';
 import { useTicket } from '../../../contexts/ticketsContext';
 
-interface TableProps {
-    tickets: ticketType[],
-}
-
-const Table: React.FC<TableProps> = ({tickets}) => {
-    const { handleGetTickets } = useTicket();
+const Table = () => {
+    const { handleGetTickets, filteredTickets } = useTicket();
     
     useEffect(() => {
         handleGetTickets();
@@ -17,17 +12,16 @@ const Table: React.FC<TableProps> = ({tickets}) => {
 
     return(
         <S.Table>
-            {   
-                
-                tickets.length ? 
+            {
+                filteredTickets.length ? 
                     <table>
                         <tbody>
                             {
-                                tickets.map((ticket) => (       
+                                filteredTickets.map((ticket) => (    
                                     <TableItem
-                                        key={ticket.id} 
+                                        key={ticket.id}
                                         ticket={ticket}
-                                    />
+                                    />                    
                                 ))
                             }
                         </tbody>

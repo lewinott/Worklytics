@@ -1,6 +1,6 @@
 # Django Rest Framework
 from django.conf import settings
-from rest_framework_simplejwt.tokens import AccessToken
+from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
@@ -18,7 +18,7 @@ class TokenRequestView(APIView):
             authorization_code = request.data.get('code')
             
             if not authorization_code:
-                return Response({"message": "Authorization code is required"}, status=400)
+                return Response({"message": "Authorization code is required"}, status=status.HTTP_400_BAD_REQUEST)
 
             data = {
                 'grant_type': 'authorization_code',
@@ -36,20 +36,21 @@ class TokenRequestView(APIView):
                 # Request access token by authorization token
                 response = requests.post(settings.TOKEN_URL, data=data, headers=headers)
             except:
-                return Response({"message": "Falha ao requisitar o código de acesso"}, status=500)
+                return Response({"message": "Falha ao requisitar o código de acesso"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             
             if response.status_code == 200:
                 try:
                     response_json = response.json()
                     access_token = response_json["access_token"]
                     refresh_token = response_json["refresh_token"]
+                    print(refresh_token)
 
                     token_decoded = AccessToken(access_token)
                     sub = token_decoded.get("sub")
                     user, _ = get_user_model().objects.get_or_create(username=sub,)
                     user.save()
                     
-                    my_response = Response({"access_token": access_token}, status=200)
+                    my_response = Response({"access_token": access_token}, status=status.HTTP_200_OK)
                     my_response.set_cookie(
                         key="refreshToken",
                         value=refresh_token,
@@ -61,10 +62,11 @@ class TokenRequestView(APIView):
 
                     return my_response
                 except TokenError as e:
-                    return Response({"message": "Código de acesso inválido"}, status=400) 
-            return Response({"message": "Código de autorização inválido"}, status=400)
+                    print(e)
+                    return Response({"message": "Código de acesso inválido"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR) 
+            return Response({"message": "Código de autorização inválido"}, status=status.HTTP_401_UNAUTHORIZED)
         except:
-            return Response({"message": "Erro inesperado durante o processo de autenticação"}, status=500)
+            return Response({"message": "Erro inesperado durante o processo de autenticação"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class TokenRefreshView(APIView):
@@ -73,7 +75,7 @@ class TokenRefreshView(APIView):
             refresh_token = request.COOKIES.get('refreshToken')
             
             if not refresh_token:
-                return Response({'message': 'Código de atualização não encontrado'}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({'message': 'Código de atualização não encontrado'}, status=status.HTTP_401_UNAUTHORIZED)
 
             data = {
                 'grant_type': 'refresh_token',
@@ -90,18 +92,19 @@ class TokenRefreshView(APIView):
                 # Request access token by refresh token
                 response = requests.post(settings.TOKEN_URL, data=data, headers=headers)
             except:
-                return Response({"message": "Falha ao requisitar o código de acesso"}, status=500)
+                return Response({"message": "Falha ao requisitar o código de acesso"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
             if response.status_code == 200:
                 try:
                     response_json = response.json()
                     access_token = response_json["access_token"]
                     _ = AccessToken(access_token)
-
-                    return Response({"access_token": access_token}, status=200)
+                
+                    return Response({"access_token": access_token}, status=status.HTTP_200_OK)
                 except TokenError as e:
-                    return Response({"message": "Código de acesso inválido"}, status=400) 
-            return Response({"message": "Código de atualização inválido"}, status=400)
+                    
+                    return Response({"message": "Código de acesso inválido"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR) 
+            return Response({"message": "Código de atualização inválido"}, status=status.HTTP_401_UNAUTHORIZED)
         except:
-            return Response({"message": "Erro inesperado durante o processo de autenticação"}, status=500)
+            return Response({"message": "Erro inesperado durante o processo de autenticação"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             
