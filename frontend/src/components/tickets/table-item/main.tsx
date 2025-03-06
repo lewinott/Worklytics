@@ -13,19 +13,31 @@ interface TableItem {
 const TableItem: React.FC<TableItem> = ({ticket }) => {
     const [ statusValue, setStatusValue ] = useState(ticket.status);
     const [ ticketNumber, setTicketNumber ] = useState(ticket.number);
+    const { handleSetIdTickets, handleUpdateTicket, checkAllTickets } = useTicket();
     const [ checked, setChecked ] = useState(false);
 
     const [isFirstRender, setIsFirstRender] = useState(true);
-    const { setIdTickets, handleUpdateTicket } = useTicket();
 
-    useEffect(() => {
+    const firstRender = () => {
         if (isFirstRender) {
             setIsFirstRender(false);
-            return;
+            return true;
         }
+        return false
+    }
 
+    useEffect(() => {
+        if(firstRender()) return;
+        
         handleUpdateTicket(ticket.id, statusValue, ticketNumber, checked);
     }, [statusValue, ticketNumber]);
+
+    useEffect(() => {
+        if(firstRender()) return;
+
+        setChecked(checkAllTickets);
+        handleSetIdTickets(ticket.id, !checkAllTickets);
+    }, [checkAllTickets]);
 
     return ( 
         <S.Tr>
@@ -34,16 +46,13 @@ const TableItem: React.FC<TableItem> = ({ticket }) => {
                     checked={checked}
                     onChange={() => {
                         setChecked(prev => !prev);
-                        setIdTickets(ticket.id, !checked);
+                        handleSetIdTickets(ticket.id, !checked);
                     }}
                 />
             </td>
             <td>{ticketNumber}</td>
             <td>
-                <TableStatus 
-                    setStatusValue={setStatusValue} 
-                    statusValue={statusValue}
-                /></td>
+                <TableStatus setStatusValue={setStatusValue} statusValue={statusValue}/></td>
             <td>{
                 formatDateToBR(ticket.creation_date.replaceAll("-","/"))} {ticket.creation_time}
             </td>

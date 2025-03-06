@@ -16,7 +16,7 @@ interface TicketContextType {
     checkAllTickets: boolean;
     setCheckAllTickets: React.Dispatch<React.SetStateAction<boolean>>;
     idTickets: number[];
-    setIdTickets: (id: number, remove?: boolean) => void;
+    handleSetIdTickets: (id: number, remove?: boolean) => void;
     handleFinishTicket: (id: number) => Promise<void>;
     filteredTickets: ticketType[];
     handleGetTickets: () => Promise<void>;
@@ -96,6 +96,15 @@ export const TicketProvider: React.FC<TicketProviderProps> = ({ children }) => {
         }
     };
 
+    const handleSetIdTickets = (id: number, remove: boolean = false) => {
+        if (remove) {
+            setIdTickets((prev) => prev.filter(ticketId => ticketId !== id));
+        } else {
+            setIdTickets((prev) => Array.from(new Set([...prev, id])));
+        }
+        console.log(idTickets);
+    }
+
     const contextValue = {
         tickets,
         setTickets,
@@ -106,13 +115,7 @@ export const TicketProvider: React.FC<TicketProviderProps> = ({ children }) => {
         checkAllTickets,
         setCheckAllTickets,
         idTickets,
-        setIdTickets: (id: number, remove: boolean = false) => {
-            if (remove) {
-                setIdTickets((prev) => prev.filter(ticketId => ticketId !== id));
-            } else {
-                setIdTickets((prev) => Array.from(new Set([...prev, id])));
-            }
-        },
+        handleSetIdTickets,
         handleFinishTicket,
         filteredTickets,
         handleGetTickets,
