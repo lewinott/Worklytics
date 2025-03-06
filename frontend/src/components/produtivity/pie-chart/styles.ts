@@ -4,7 +4,6 @@ import { colors } from "../../../styles/theme";
 export const BackgroundContainer = styled.div`
     height: 400px;
     width: 60%;
-    margin: 20px;
     background-color: white;
     display: flex;
     flex-direction: column;
