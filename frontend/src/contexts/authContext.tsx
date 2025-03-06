@@ -29,7 +29,7 @@ interface AuthProviderProps{
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-    const [cookies, setCookie, removeCookie] = useCookies(["accessToken"]);
+    const [cookies, setCookie, removeCookie] = useCookies(["accessToken", "refreshToken"]);
 
     const handleVerifyCookie = () => {
         const accessTokenValue = cookies["accessToken"];
@@ -45,8 +45,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     
     const getUserSub = () => {
         if(isLogged){
-            const decoded = jwtDecode(cookies["accessToken"]);
-            return decoded.sub;
+            try{
+                const decoded = jwtDecode(cookies["accessToken"]);
+                return decoded.sub;
+            }catch(error){
+                handleVerifyCookie();
+            }
         }
         return null;
     }

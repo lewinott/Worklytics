@@ -2,9 +2,12 @@ import React, { createContext, useContext, useState } from "react";
 import { ticketType } from "../utils/types";
 import { useAuth } from "./authContext";
 import { formatDateToBR } from "../utils/utils";
-import { finishTicketRequest } from "../api/ticketsRequest";
-import { getTicketRequest } from "../api/ticketsRequest";
-import { patchTicketRequest } from "../api/ticketsRequest";
+import { 
+    finishTicketRequest, 
+    getTicketRequest, 
+    patchTicketRequest,
+    createTicketRequest,
+} from "../api/ticketsRequest";
 
 interface TicketContextType {
     tickets: ticketType[];
@@ -21,6 +24,7 @@ interface TicketContextType {
     filteredTickets: ticketType[];
     handleGetTickets: () => Promise<void>;
     handleUpdateTicket: (id: number, statusValue: string, ticketNumber: string, checked: boolean) => Promise<void>;
+    handleCreateTicket: (numberTicket: string, statusTicket: string) => Promise<void>;
 }
 
 const TicketContext = createContext<TicketContextType | undefined>(undefined);
@@ -43,6 +47,7 @@ export const TicketProvider: React.FC<TicketProviderProps> = ({ children }) => {
     const handleFinishTicket = async (id: number) => {
         try {
             await finishTicketRequest(true, id, accessToken);
+            handleGetTickets();
         } catch (error) {
             console.log(error);
         }
@@ -60,10 +65,11 @@ export const TicketProvider: React.FC<TicketProviderProps> = ({ children }) => {
             ticket.creation_time?.toString(),
         ].some(field => field?.toLowerCase().includes(search));
     }).filter(ticket => {
-        const effectiveFilter = filterStatus.filter(s => s.trim() !== "");
-        if (effectiveFilter.length === 0) return true;
-        return effectiveFilter.includes(ticket.status?.toLowerCase());
-    });
+        const filterStringVoid = filterStatus.filter(s => s.trim() !== "");
+
+        if (filterStringVoid.length === 0) return true;
+        return filterStringVoid.includes(ticket.status?.toLowerCase());
+    }).filter(ticket => !ticket.finished)
 
     const handleGetTickets = async () => {
         try{
@@ -102,9 +108,25 @@ export const TicketProvider: React.FC<TicketProviderProps> = ({ children }) => {
         } else {
             setIdTickets((prev) => Array.from(new Set([...prev, id])));
         }
-        console.log(idTickets);
     }
 
+    const handleCreateTicket = async (numberTicket: string, statusTicket: string) => {
+        const userSub = getUserSub() || "";
+        const accessToken = getAccessToken() || "";
+
+        try{
+            const _ = await createTicketRequest(
+                numberTicket, 
+                statusTicket, 
+                userSub, 
+                accessToken,
+            );
+            handleGetTickets();
+        }catch(error){
+            console.log(error);
+        }
+    }
+    
     const contextValue = {
         tickets,
         setTickets,
@@ -120,6 +142,7 @@ export const TicketProvider: React.FC<TicketProviderProps> = ({ children }) => {
         filteredTickets,
         handleGetTickets,
         handleUpdateTicket,
+        handleCreateTicket,
     };
 
     return (

@@ -9,14 +9,16 @@ const MainContainer = () => {
         
         <S.MainContainer>
             <S.LeftContainer>
-                <Header mainTitle="Controle diário de tickets" 
-                subTitle="Por favor, para salvar seus tickets, informe-os abaixo"/>
-                <FormsContainer />
-                <S.LineForms/>
-
-                <Header mainTitle="Seus tickets" 
-                subTitle="Pesquise pelo número ou filtre pelo status do ticket"/>
                 <TicketProvider>
+                    <Header mainTitle="Controle diário de tickets" 
+                    subTitle="Por favor, para salvar seus tickets, informe-os abaixo"/>
+                    <FormsContainer/>
+                    <S.LineForms/>
+                    
+                    <Header mainTitle="Seus tickets" 
+                    subTitle="Pesquise pelo número ou filtre pelo status do ticket"/>
+                
+                
                     <ContainerTable/>
                 </TicketProvider>
             </S.LeftContainer>

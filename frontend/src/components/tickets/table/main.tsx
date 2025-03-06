@@ -12,17 +12,16 @@ const Table = () => {
 
     return(
         <S.Table>
-            {   
-                
+            {
                 filteredTickets.length ? 
                     <table>
                         <tbody>
                             {
-                                filteredTickets.map((ticket) => (       
+                                filteredTickets.map((ticket) => (    
                                     <TableItem
-                                        key={ticket.id} 
+                                        key={ticket.id}
                                         ticket={ticket}
-                                    />
+                                    />                    
                                 ))
                             }
                         </tbody>

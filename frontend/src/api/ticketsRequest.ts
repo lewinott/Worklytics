@@ -1,6 +1,6 @@
-import axios from 'axios';
 import { serverBaseUrl } from './common';
 import { formatDateToUS } from '../utils/utils';
+import api from './configureApi';
 
 export const createTicketRequest = async (
     number: string, 
@@ -11,7 +11,7 @@ export const createTicketRequest = async (
     const creation_date = new Date().toLocaleDateString().replaceAll("/", "-");
     const creation_time = new Date().toLocaleTimeString();
 
-    const response = await axios.post(`${serverBaseUrl}/tickets/`, {
+    const response = await api.post(`${serverBaseUrl}/tickets/`, {
         "number": number,
         "status": status,
         "creation_date": formatDateToUS(creation_date, "-"),
@@ -40,7 +40,7 @@ export const getTicketRequest = async (
     if (status) params.append("status", status); 
     if (number) params.append("number", number);
 
-    const response = await axios.get(`${serverBaseUrl}/tickets/?${params.toString()}`, {
+    const response = await api.get(`/tickets/?${params.toString()}`, {
         headers: {
             "Authorization": `Bearer ${accessToken}`
         },
@@ -56,7 +56,7 @@ export const patchTicketRequest = async (
     idTicket: number,
     accessToken: string,
 ) => {
-    const response = await axios.patch(`${serverBaseUrl}/tickets/${idTicket}/`, {
+    const response = await api.patch(`/tickets/${idTicket}/`, {
         "number": number,
         "status": status,
     }, {
@@ -74,7 +74,7 @@ export const finishTicketRequest = async (
     idTicket: number,
     accessToken: string,
 ) => {
-    const response = await axios.patch(`${serverBaseUrl}/tickets/${idTicket}/`, {
+    const response = await api.patch(`${serverBaseUrl}/tickets/${idTicket}/`, {
         "finished": finished,
     }, {
         headers: {

@@ -1,8 +1,8 @@
 export const formatDateToBR = (dateStr: string, sep?: string) => {
   sep = sep ? sep : "/";
 
-  const [year, month, day] = dateStr.split("/");
-  return `${year}${sep}${month}${sep}${day}`;
+  const [year, month, day] = dateStr.split(sep);
+  return `${day}${sep}${month}${sep}${year}`;
 };
 
 export const formatDateToUS = (dateStr: string, sep?: string) => {
