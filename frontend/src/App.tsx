@@ -12,6 +12,7 @@ import Callback from './pages/auth/callback';
 import { AuthProvider } from './contexts/authContext';
 import ProtectedRoutes from './utils/ProtectedRoutes';
 import { TicketProvider } from './contexts/ticketsContext';
+import GadgetForm from './pages/gadget/main';
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
             <Route element={<ProtectedRoutes/>}>
               <Route path="/" element={<Tickets/>}/>
               <Route path="/produtivity" element={<Produtivity/>}/>
+              <Route path="/GadgetForm" element={<GadgetForm/>}/>
             </Route>
           </Routes>
         </TicketProvider>
