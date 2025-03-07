@@ -1,6 +1,11 @@
+// Libs
 import { useEffect } from "react";
 import { Navigate, useLocation } from "react-router-dom";
+
+// Components
 import { loginRequest } from "../../api/authRequests";
+
+// Context
 import { useAuth } from "../../contexts/authContext";
 
 const Callback = () => {

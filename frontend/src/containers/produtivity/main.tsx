@@ -1,11 +1,18 @@
+// Libs
 import { useEffect } from "react";
+
+// Style
 import * as S from './styles'
+
+// Components
 import PieContainer from "../../components/produtivity/pie-chart/main";
 import BarChartContainer from "../../components/produtivity/bar-chart/main";
 import PizzaContainer from "../../components/produtivity/pizza-chart/main";
 import Header from "../../components/global/header/main";
 import FilterDate from "../../components/produtivity/filter-data/main";
 import { LineForms } from "../tickets/main-container/styles";
+
+// Contexts
 import { useTicket } from "../../contexts/ticketsContext";
 
 const ProdutivityContainer = () => {

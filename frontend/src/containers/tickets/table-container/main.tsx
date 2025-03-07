@@ -1,10 +1,15 @@
+// Style
 import * as S from './styles'
+
+// Components
 import Table from "../../../components/tickets/table/main";
 import { FixedContainer } from '../bottom-container/styles';
 import PrimaryButton from '../../../components/global/primary-button/main';
 import SecondaryButton from '../../../components/global/secondary-button/main';
 import SearchTicket from "../../../components/tickets/search-ticket/main";
 import FilterStatus from "../../../components/tickets/filter-status/main";
+
+// Contexts
 import { useTicket } from '../../../contexts/ticketsContext';
 
 const ContainerTable = () => {

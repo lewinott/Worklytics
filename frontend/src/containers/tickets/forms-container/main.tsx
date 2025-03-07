@@ -1,8 +1,15 @@
+// Libs
 import { useState } from 'react';
+
+// Styles
 import * as S from './styles'
+
+// Components
 import InputTicket from "../../../components/tickets/input-ticket/main";
 import PrimaryButton from "../../../components/global/primary-button/main";
 import SelectStatus from "../../../components/tickets/select-status/main";
+
+// Contexts
 import { useTicket } from '../../../contexts/ticketsContext';
 
 const FormsContainer = () => {

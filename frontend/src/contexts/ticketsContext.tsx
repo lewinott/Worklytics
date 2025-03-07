@@ -1,7 +1,14 @@
+// Libs
 import React, { createContext, useContext, useState } from "react";
+
+// Utils
 import { ticketType } from "../utils/types";
-import { useAuth } from "./authContext";
 import { formatDateToBR } from "../utils/utils";
+
+// Contexts
+import { useAuth } from "./authContext";
+
+// Requests
 import { 
     finishTicketRequest, 
     getTicketRequest, 

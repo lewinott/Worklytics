@@ -1,9 +1,18 @@
+// Utils
 import { formatDateToBR } from "../../../utils/utils";
+
+// Components
 import Checkbox from "../checkbox/main";
 import TableStatus from "../table-status/main";
 import { ticketType } from "../../../utils/types";
+
+// Libs
 import { useState, useEffect } from "react";
+
+// Style
 import * as S from "./styles.ts";
+
+// Contexts
 import { useTicket } from "../../../contexts/ticketsContext.tsx";
 
 interface TableItem {
