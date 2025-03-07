@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import * as S from './styles'
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
-import { useTicket } from "../../../contexts/ticketsContext";
+import { BarChart, Bar, XAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { ticketType } from "../../../utils/types";
 
 
 type TooltipProps = {
@@ -9,8 +9,11 @@ type TooltipProps = {
     payload?: { name: string; value: number }[];
 };
 
-const BarChartContainer = () => {
-    const { tickets } = useTicket();
+interface barChartContainerProps {
+    dateFilterTickets: ticketType[]
+}
+
+const BarChartContainer: React.FC<barChartContainerProps> = ({ dateFilterTickets }) => {
     const [data, setData] = useState([
         { status: 'Pendentes', tickets: 0 },
         { status: 'Em espera', tickets: 0 },
@@ -21,8 +24,8 @@ const BarChartContainer = () => {
         let assigned = 0;
         let waiting = 0;
         let closed = 0;
-
-        tickets.map((ticket) => {
+        
+        dateFilterTickets.map((ticket) => {
             if (ticket.status === "Pendente") assigned += 1;
             if (ticket.status === "Em espera") waiting += 1;
             if (ticket.status === "Resolvido") closed += 1;
@@ -38,7 +41,7 @@ const BarChartContainer = () => {
 
     useEffect(() => {
         handleSetDataGraphic();
-    }, [tickets]);
+    }, [dateFilterTickets]);
 
     const CustomTooltip: React.FC<TooltipProps> = ({ active, payload }) => {
         if (active && payload && payload.length) {

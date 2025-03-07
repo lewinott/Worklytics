@@ -1,34 +1,29 @@
+// Libs
 import React, { useEffect, useState } from "react";
-import * as S from './styles'
 import { PieChart, Pie, ResponsiveContainer, Cell, Tooltip } from 'recharts';
-import { colors } from "../../../styles/theme";
-import { useTicket } from "../../../contexts/ticketsContext";
 
+// Style
+import * as S from './styles'
+// import { colors } from "../../../styles/theme";
 
-type TooltipProps = {
-    active?: boolean;
-    payload?: { name: string; value: number }[];
-};
+// Types
+import { ticketType } from "../../../utils/types";
 
-const PieContainer = () => {
-    const { tickets } = useTicket();
+interface pieContainerProps {
+    dateFilterTickets: ticketType[]
+}
+
+const PieContainer: React.FC<pieContainerProps> = ({ dateFilterTickets }) => {
     const [data, setData] = useState(0); 
 
-    const handleSetDataGraphic = () => {
-        let countDiaryTicket = 0;
-
-        tickets.map((ticket) => {
-            const ticketday = ticket.creation_date.split("-")[2];
-            const today = "0" + new Date().getDate();
-            if (ticketday == today) countDiaryTicket += 1;
-        })
-        
-        setData(countDiaryTicket);
-    }
-
     useEffect(() => {
-        handleSetDataGraphic();
-    }, [tickets])
+        setData(dateFilterTickets.length);
+    }, [dateFilterTickets]);
+
+    type TooltipProps = {
+        active?: boolean;
+        payload?: { name: string; value: number }[];
+    };
 
     const ticketsData = [
         { name: 'Total respondidos:', value: data, color: "#007BC0" },
@@ -76,7 +71,7 @@ const PieContainer = () => {
                         fontWeight="bold"
                         fill="#black"
                     >
-                        {`${ticketsData[0].value}/${ticketsData[1].value + ticketsData[0].value}`}
+                        {`${ticketsData[0].value}/${90}`}
                     </text>
                     <text
                         x="50%"

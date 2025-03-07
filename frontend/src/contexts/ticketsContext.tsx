@@ -9,6 +9,7 @@ import { formatDateToBR } from "../utils/utils";
 import { useAuth } from "./authContext";
 
 // Requests
+import { handleAxiosError } from "../api/common";
 import { 
     finishTicketRequest, 
     getTicketRequest, 
@@ -56,7 +57,7 @@ export const TicketProvider: React.FC<TicketProviderProps> = ({ children }) => {
             await finishTicketRequest(true, id, accessToken);
             handleGetTickets();
         } catch (error) {
-            console.log(error);
+            handleAxiosError(error);
         }
     };
 
@@ -88,7 +89,7 @@ export const TicketProvider: React.FC<TicketProviderProps> = ({ children }) => {
             );
             setTickets(data);
         }catch(error){
-            console.log(error);
+            handleAxiosError(error);
         }
     }
 
@@ -105,7 +106,7 @@ export const TicketProvider: React.FC<TicketProviderProps> = ({ children }) => {
                 accessToken
             );
         }catch(error){
-            console.log(error)
+            handleAxiosError(error);
         }
     };
 
@@ -122,7 +123,7 @@ export const TicketProvider: React.FC<TicketProviderProps> = ({ children }) => {
         const accessToken = getAccessToken() || "";
 
         try{
-            const _ = await createTicketRequest(
+            await createTicketRequest(
                 numberTicket, 
                 statusTicket, 
                 userSub, 
@@ -130,7 +131,7 @@ export const TicketProvider: React.FC<TicketProviderProps> = ({ children }) => {
             );
             handleGetTickets();
         }catch(error){
-            console.log(error);
+            handleAxiosError(error);
         }
     }
     

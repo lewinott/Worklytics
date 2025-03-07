@@ -11,7 +11,7 @@ export const createTicketRequest = async (
     const creation_date = new Date().toLocaleDateString().replaceAll("/", "-");
     const creation_time = new Date().toLocaleTimeString();
 
-    const response = await api.post(`${serverBaseUrl}/tickets/`, {
+    await api.post(`${serverBaseUrl}/tickets/`, {
         "number": number,
         "status": status,
         "creation_date": formatDateToUS(creation_date, "-"),
@@ -24,8 +24,6 @@ export const createTicketRequest = async (
         },
         withCredentials: true,
     });
-
-    return response;
 };
 
 export const getTicketRequest = async (

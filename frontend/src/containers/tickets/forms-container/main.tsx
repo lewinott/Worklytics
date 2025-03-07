@@ -15,16 +15,17 @@ import { useTicket } from '../../../contexts/ticketsContext';
 const FormsContainer = () => {
     const { handleCreateTicket } = useTicket();
     const [ numberTicket, setNumberTicket ] = useState<string>("");
-    const [ statusTicket, setStatusTicket ] = useState<string>("");
+    const [ statusTicket, setStatusTicket ] = useState<string>("Status");
 
     const handleSubmit = () => {
         handleCreateTicket(numberTicket, statusTicket);
+        setNumberTicket("")
     }
 
     return (
         <S.MainContainer>
             <InputTicket value={numberTicket} handleChange={setNumberTicket} />
-            <SelectStatus handleChange={setStatusTicket} />
+            <SelectStatus selectedOption={statusTicket} setSelectedOption={setStatusTicket} />
             <PrimaryButton description="Salvar" onClick={handleSubmit} />
         </S.MainContainer>
     )

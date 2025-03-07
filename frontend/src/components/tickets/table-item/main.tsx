@@ -59,11 +59,15 @@ const TableItem: React.FC<TableItem> = ({ticket }) => {
                     }}
                 />
             </td>
-            <td>{ticketNumber}</td>
+            <td>
+                <S.InputNumberTicket>
+                    {ticketNumber}
+                </S.InputNumberTicket>
+            </td>
             <td>
                 <TableStatus setStatusValue={setStatusValue} statusValue={statusValue}/></td>
-            <td>{
-                formatDateToBR(ticket.creation_date.replaceAll("-","/"))} {ticket.creation_time}
+            <td>
+                {formatDateToBR(ticket.creation_date.replaceAll("-","/"))} {ticket.creation_time}
             </td>
         </S.Tr>
     );

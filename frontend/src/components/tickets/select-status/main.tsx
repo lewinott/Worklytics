@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import * as S from './styles'
 
 interface SelectStatusProps {
-  handleChange: (ticketId: string) => void,
+  setSelectedOption: (ticketId: string) => void,
+  selectedOption: string,
 }
 
-const SelectStatus: React.FC<SelectStatusProps> = ({ handleChange }) => {
+const SelectStatus: React.FC<SelectStatusProps> = ({ selectedOption, setSelectedOption }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedOption, setSelectedOption] = useState("Status");
   
     const options = [
       { value: "opcao1", label: "Em espera" },
@@ -18,8 +18,6 @@ const SelectStatus: React.FC<SelectStatusProps> = ({ handleChange }) => {
     const handleSelect = (option: { value: string; label: string }) => {
       setSelectedOption(option.label);
       setIsOpen(false);
-      
-      handleChange(option.label);
     };
   
     return (
