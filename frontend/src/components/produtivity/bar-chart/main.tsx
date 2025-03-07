@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import * as S from './styles'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { useTicket } from "../../../contexts/ticketsContext";
 
 
 type TooltipProps = {
@@ -8,27 +9,49 @@ type TooltipProps = {
     payload?: { name: string; value: number }[];
 };
 
-const MAX_VALUE = 100;
-
-const data = [
-    { status: 'Atribuidos', Tickets: 5 },
-    { status: 'Em espera', Tickets: 12 },
-    { status: 'Fechados', Tickets: 8 },
-];
-
-const CustomTooltip: React.FC<TooltipProps> = ({ active, payload }) => {
-    if (active && payload && payload.length) {
-        return (
-            <S.TooltipContainer>
-                <p>Total de tickets:</p>
-                <p>{payload[0].value}</p>
-            </S.TooltipContainer>
-        );
-    }
-    return null;
-};
-
 const BarChartContainer = () => {
+    const { tickets } = useTicket();
+    const [data, setData] = useState([
+        { status: 'Pendentes', tickets: 0 },
+        { status: 'Em espera', tickets: 0 },
+        { status: 'Resolvidos', tickets: 0 },
+    ]); 
+
+    const handleSetDataGraphic = () => {
+        let assigned = 0;
+        let waiting = 0;
+        let closed = 0;
+
+        tickets.map((ticket) => {
+            if (ticket.status === "Pendente") assigned += 1;
+            if (ticket.status === "Em espera") waiting += 1;
+            if (ticket.status === "Resolvido") closed += 1;
+        })
+
+        const newData = [...data];
+        newData[0].tickets = assigned
+        newData[1].tickets = waiting
+        newData[2].tickets = closed
+
+        setData(newData);
+    };
+
+    useEffect(() => {
+        handleSetDataGraphic();
+    }, [tickets]);
+
+    const CustomTooltip: React.FC<TooltipProps> = ({ active, payload }) => {
+        if (active && payload && payload.length) {
+            return (
+                <S.TooltipContainer>
+                    <p>Total de tickets:</p>
+                    <p>{payload[0].value}</p>
+                </S.TooltipContainer>
+            );
+        }
+        return null;
+    };
+    
     return (
         <S.BackgroundContainer>
             <p>Tickets Respondidos por Status</p>
@@ -40,7 +63,7 @@ const BarChartContainer = () => {
                         <XAxis dataKey="status" axisLine={false} tickLine={false} stroke="#000000" tickSize={20} />
                     <Tooltip content={<CustomTooltip />} />
 
-                    <Bar dataKey="Tickets" barSize={70}>
+                    <Bar dataKey="tickets" barSize={70}>
                         {data.map((entry, index) => (
                             <Cell key={`cell-${index}`} fill='#007BC0' />
                         ))}
