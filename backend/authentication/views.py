@@ -107,4 +107,26 @@ class TokenRefreshView(APIView):
             return Response({"message": "Código de atualização inválido"}, status=status.HTTP_401_UNAUTHORIZED)
         except:
             return Response({"message": "Erro inesperado durante o processo de autenticação"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-            
+
+
+class LogoutView(APIView):
+    def post(self, request, *args, **kwargs):
+        refresh_token = request.COOKIES.get("refreshToken")
+
+        if not refresh_token:
+            return Response({"message": "Nenhum token de atualização encontrado"}, status=status.HTTP_400_BAD_REQUEST)
+
+        logout_url = f"{settings.KEYCLOAK_URL}/realms/{settings.KEYCLOAK_REALM}/protocol/openid-connect/logout"
+
+        data = {
+            "client_id": settings.CLIENT_ID,
+            "client_secret": settings.CLIENT_SECRET,
+            "refresh_token": refresh_token,
+        }
+
+        response = requests.post(logout_url, data=data)
+
+        if response.status_code in [200, 204]:
+            return Response({"message": "Usuário deslogado com sucesso"}, status=status.HTTP_200_OK)
+        else:
+            return Response({"message": "Erro ao deslogar usuário"}, status=response.status_code)

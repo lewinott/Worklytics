@@ -13,6 +13,7 @@ const TableStatus: React.FC<TableStatusProps> = ({ onChange }) => {
     const options = [
         { value: "opcao1", label: "Em espera" },
         { value: "opcao2", label: "Pendente" },
+        { value: "opcao3", label: "Resolvido" },
     ];
 
     const toggleOption = (option: { value: string; label: string }) => {

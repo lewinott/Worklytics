@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import * as S from './styles'
 import { PieChart, Pie, ResponsiveContainer, Cell, Tooltip } from 'recharts';
 import { colors } from "../../../styles/theme";
+import { useTicket } from "../../../contexts/ticketsContext";
 
 
 type TooltipProps = {
@@ -9,14 +10,30 @@ type TooltipProps = {
     payload?: { name: string; value: number }[];
 };
 
-
 const PieContainer = () => {
-    const ticketsData = [
-        { name: 'Total respondidos:', value: 15, color: "#007BC0" },
-        { name: 'Não respondidos:', value: 75, color: "#E0E2E5" },
-    ];
+    const { tickets } = useTicket();
+    const [data, setData] = useState(0); 
 
-    
+    const handleSetDataGraphic = () => {
+        let countDiaryTicket = 0;
+
+        tickets.map((ticket) => {
+            const ticketday = ticket.creation_date.split("-")[2];
+            const today = "0" + new Date().getDate();
+            if (ticketday == today) countDiaryTicket += 1;
+        })
+        
+        setData(countDiaryTicket);
+    }
+
+    useEffect(() => {
+        handleSetDataGraphic();
+    }, [tickets])
+
+    const ticketsData = [
+        { name: 'Total respondidos:', value: data, color: "#007BC0" },
+        { name: 'Não respondidos:', value: 90-Number(data), color: "#E0E2E5" },
+    ];
 
     const CustomTooltip: React.FC<TooltipProps> = ({ active, payload }) => {
         if (active && payload && payload.length) {
@@ -70,7 +87,6 @@ const PieContainer = () => {
                     >
                         Total Diário
                     </text>
-
                     <Tooltip content={<CustomTooltip/>}/>
                 </PieChart>
             </ResponsiveContainer>

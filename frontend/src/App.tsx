@@ -11,33 +11,38 @@ import Login from './pages/auth/main';
 import Callback from './pages/auth/callback';
 import { AuthProvider } from './contexts/authContext';
 import ProtectedRoutes from './utils/ProtectedRoutes';
+import { TicketProvider } from './contexts/ticketsContext';
+import GadgetForm from './pages/gadget/main';
 
 const App = () => {
   return (
-    // <Router>
-    //   <GlobalStyles/>
-    //   <AuthProvider>
-    //     <Routes>
-    //       <Route path="/login" element={<Login />} />
-    //       <Route path="/callback" element={<Callback />} />
-          
-    //       <Route element={<ProtectedRoutes/>}>
-    //         <Route path="/" element={<Tickets/>}/>
-    //         <Route path="/produtivity" element={<Produtivity/>}/>
-    //       </Route>
-    //     </Routes>
-    //   </AuthProvider>
-    // </Router>
-
     <Router>
       <GlobalStyles/>
-        <Routes>
-          {/* <Route element={<ProtectedRoutes/>}> */}
-            <Route path="/" element={<Tickets/>}/>
-            <Route path="/produtivity" element={<Produtivity/>}/>
-          {/* </Route> */}
-        </Routes>
+      <AuthProvider>
+        <TicketProvider>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/callback" element={<Callback />} />
+            
+            <Route element={<ProtectedRoutes/>}>
+              <Route path="/" element={<Tickets/>}/>
+              <Route path="/produtivity" element={<Produtivity/>}/>
+              <Route path="/GadgetForm" element={<GadgetForm/>}/>
+            </Route>
+          </Routes>
+        </TicketProvider>
+      </AuthProvider>
     </Router>
+
+    // <Router>
+    //   <GlobalStyles/>
+    //     <Routes>
+    //       {/* <Route element={<ProtectedRoutes/>}> */}
+    //         <Route path="/" element={<Tickets/>}/>
+    //         <Route path="/produtivity" element={<Produtivity/>}/>
+    //       {/* </Route> */}
+    //     </Routes>
+    // </Router>
   )
 }
 

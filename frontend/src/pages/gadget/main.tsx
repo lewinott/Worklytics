@@ -1,18 +1,11 @@
-// Libs
-import { useState } from 'react';
+import { useState } from "react";
+import InputTicket from "../../components/tickets/input-ticket/main";
+import SelectStatus from "../../components/tickets/select-status/main";
+import PrimaryButton from "../../components/global/primary-button/main";
+import { useTicket } from "../../contexts/ticketsContext";
+import * as S from "./styles";
 
-// Styles
-import * as S from './styles'
-
-// Components
-import InputTicket from "../../../components/tickets/input-ticket/main";
-import PrimaryButton from "../../../components/global/primary-button/main";
-import SelectStatus from "../../../components/tickets/select-status/main";
-
-// Contexts
-import { useTicket } from '../../../contexts/ticketsContext';
-
-const FormsContainer = () => {
+const GadgetForm = () => {
     const { handleCreateTicket } = useTicket();
     const [ numberTicket, setNumberTicket ] = useState<string>("");
     const [ statusTicket, setStatusTicket ] = useState<string>("");
@@ -28,6 +21,6 @@ const FormsContainer = () => {
             <PrimaryButton description="Salvar" onClick={handleSubmit} />
         </S.MainContainer>
     )
-}
+};
 
-export default FormsContainer
+export default GadgetForm;
