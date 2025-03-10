@@ -1,8 +1,7 @@
 # Django Rest Framework
 from django.conf import settings
-from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
+from rest_framework_simplejwt.tokens import AccessToken
 from rest_framework_simplejwt.exceptions import TokenError
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
@@ -35,7 +34,8 @@ class TokenRequestView(APIView):
             try:
                 # Request access token by authorization token
                 response = requests.post(settings.TOKEN_URL, data=data, headers=headers)
-            except:
+            except Exception as e:
+                print(e)
                 return Response({"message": "Falha ao requisitar o código de acesso"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             
             if response.status_code == 200:
@@ -43,7 +43,6 @@ class TokenRequestView(APIView):
                     response_json = response.json()
                     access_token = response_json["access_token"]
                     refresh_token = response_json["refresh_token"]
-                    print(refresh_token)
 
                     token_decoded = AccessToken(access_token)
                     sub = token_decoded.get("sub")
